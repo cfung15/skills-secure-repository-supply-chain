@@ -84,20 +84,20 @@ jobs:
           text-file: ${{ env.FOLLOW_REDIRECTS_FILE }}
           keyphrase: "1\\.14\\.1"
 
-      - name: Update comment - step results
-        uses: GrantBirki/comment@v3.0.3
-        with:
-          repository: ${{ env.ISSUE_REPOSITORY }}
-          issue-number: ${{ env.ISSUE_NUMBER }}
-          comment-id: ${{ steps.find-last-comment.outputs.comment-id }}
-          edit-mode: replace
-          file: exercise-toolkit/markdown-templates/step-feedback/step-results-table.md
-          vars: |
-            step_number: "1"
-            results_table: >
-              [{"description":"Checked that package-lock.json has valid JSON structure","passed": ${{ steps.check-json-structure.outcome == 'success' }}},
-               {"description":"Checked for required keyphrase in package-lock.json","passed": ${{ steps.check-keyphrase.outcome == 'success' }}}]
-
+        - name: Update comment - step results
+    uses: GrantBirki/comment@v3.0.3
+    with:
+      repository: ${{ env.ISSUE_REPOSITORY }}
+      issue-number: ${{ env.ISSUE_NUMBER }}
+      comment-id: ${{ steps.find-last-comment.outputs.comment-id }}
+      edit-mode: replace
+      file: exercise-toolkit/markdown-templates/step-feedback/step-results-table.md
+      vars: |
+        step_number: "1"
+        results_table: >
+          [{"description":"Checked that package-lock.json has valid JSON structure","passed": ${{ steps.check-json-structure.outcome == 'success' }}},
+           {"description":"Checked for required keyphrase in package-lock.json","passed": ${{ steps.check-keyphrase.outcome == 'success' }}}]
+           
       # END: Check practical exercise
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')
