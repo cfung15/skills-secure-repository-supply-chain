@@ -83,7 +83,7 @@ jobs:
         with:
           text-file: ${{ env.FOLLOW_REDIRECTS_FILE }}
           keyphrase: "1\\.14\\.1"
-      
+          
       - name: Update comment - step results
         uses: GrantBirki/comment@v3.0.3
         with:
@@ -93,12 +93,11 @@ jobs:
           edit-mode: replace
           file: exercise-toolkit/markdown-templates/step-feedback/step-results-table.md
           vars: |
-            step_number: "1"
-            results_table:
-              - description: "Checked that package-lock.json has valid JSON structure"
-                passed: ${{ steps.check-json-structure.outcome == 'success' }}
-              - description: "Checked for required keyphrase in package-lock.json"
-                passed: ${{ steps.check-keyphrase.outcome == 'success' }}
+            step_number: 1
+            check_1_description: "Checked that package-lock.json has valid JSON structure"
+            check_1_passed: ${{ steps.check-json-structure.outcome == 'success' }}
+            check_2_description: "Checked for follow-redirects version 1.14.1 in package-lock.json"
+            check_2_passed: ${{ steps.check-keyphrase.outcome == 'success' }}
            
       # END: Check practical exercise
       - name: Fail job if not all checks passed
